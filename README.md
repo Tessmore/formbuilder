@@ -1,8 +1,7 @@
 formbuilder
 ===========
 
-Dynamic 'twitter bootstrap' form generator parsed on text input, heavily inspired by http://efbe.arc90.com/636775123b36e74524a1837e58a92c8eb08456ef 
-and a little bit of markdown.
+Dynamic 'twitter bootstrap' form generator parsed on text input, heavily inspired by http://efbe.arc90.com/636775123b36e74524a1837e58a92c8eb08456ef and a little bit of markdown.
 
 ## Dependencies
 
@@ -24,19 +23,19 @@ Include the formbuilder script and initialize some element
     </script>
 
 Default input field
-    Name
+      Name
 
 (sub) Title
-    # Title
+      # Title
   
 Complex(er) fields
-    Name - arguments (comma seperated tuples "argument=value" )
+      Name - arguments (comma seperated tuples "argument=value" )
 
 Checkboxes / radio button groups
-    Name - t=checkbox
-    * First
-    * Second
-    * Third
+      Name - t=checkbox
+      * First
+      * Second
+      * Third
   
 <table class='table'>
   <tr><th>Argument <th>Possible value(s)
