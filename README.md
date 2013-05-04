@@ -1,5 +1,7 @@
-formbuilder
+Formbuilder
 ===========
+
+Live example [http://www.tessmore.nl/formbuilder/ http://www.tessmore.nl/formbuilder/]
 
 Dynamic 'twitter bootstrap' form generator parsed on text input, heavily inspired by http://efbe.arc90.com/636775123b36e74524a1837e58a92c8eb08456ef and a little bit of markdown.
 
