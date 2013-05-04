@@ -2,6 +2,7 @@
 $.fn.formbuilder = function() {  
 
   var textarea = $('<textarea />');
+  var result   = $('<pre />');
   var form     = $('<form />');
   var group    = $('<div class="control-group" />');
   var controls = $('<div class="controls" />');
@@ -18,16 +19,18 @@ $.fn.formbuilder = function() {
 
   this
     .append(textarea)
+    .after(result)
+    .after('<h3>Result</h3>')
     .after(form)
     .after('<h3>Preview</h3>');
 
   textarea.on('keyup', function() {
-    var html  = '';
+    form.html(''); // Reset the control
     var lines = this.value.split("\n");
     
     for (var i=0; i < lines.length; i++) {
       if (lines[i].charAt(0) == '#') {
-        html += '<h3>' + lines[i].substring(1) + '</h3>';
+        form.append('<h3>' + lines[i].substring(1) + '</h3>');
         continue;
       }
       
@@ -37,14 +40,19 @@ $.fn.formbuilder = function() {
       if (! options || !fields[type])
         continue;
 
-      group.append(label.text(options.label));
-      
-      addField(fields[type], options.name, options.id);
+      group
+        .append(label.text(options.label))
+        .append(
+          controls.html(
+            fields[type]
+              .attr('name', options.name)
+              .attr('id',   options.id)
+         ));
       
       if (type === 'select' || type === 'radio' || type === 'checkbox') {
         fields[type].html(''); // Reset the list
         
-        while (++i < lines.length && lines[i].charAt(0) == '*') {
+        while (++i < lines.length && lines[i] && (lines[i].charAt(0) == '*' || lines[i].charAt(0) == '-')) {
           value = lines[i].substring(1);
           
           if (type === 'select')
@@ -60,21 +68,12 @@ $.fn.formbuilder = function() {
         
         i--; // Go back 1 step to parse the next element without #hashtag
       }
-            
-      html += group.html();
+      
+      group.clone().appendTo(form);
     }
     
-    form.html(html + '<button type="submit" class="btn">Submit</button>');
+    result.text(form.html());
   });
-    
-  function addField(element, name, id) {
-    group.append(
-      controls.html(
-        element
-          .attr('name', name)
-          .attr('id',   id)
-     ));
-  }
   
   function parseLine(line) {
     var line = line.trim().replace(/["']/g, '').split("-");
