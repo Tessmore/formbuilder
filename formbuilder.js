@@ -1,3 +1,4 @@
+// Author: Fabien Tesselaar (https://github.com/Tessmore/formbuilder)
 
 $.fn.formbuilder = function() {  
 
