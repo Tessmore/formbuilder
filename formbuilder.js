@@ -85,7 +85,7 @@ $.fn.formbuilder = function() {
           
     var options = {
       label : name,
-      name  : name
+      name  : name.replace(/[ ]/g, '_')
     };
     
     if (line[1]) {
