@@ -6,7 +6,7 @@ Dynamic 'twitter bootstrap' form generator parsed on text input, inspired by htt
 ## Examples
 
 ```
-weekend*
+weekend*   (you also have shirt*)
 ```
 
 Converts to:
@@ -59,9 +59,11 @@ Hoe lang ga je mee? | radio
 > Two empty lines or three dashes "---" add whitespace. 
 
 ##### I need a dropdown
-> label text | select
-> - Option a
-> - Option b
+```
+label text | select
+- Option a
+- Option b
+```
 
 ##### I need a title
 > Use "#" at the beginning of the line
