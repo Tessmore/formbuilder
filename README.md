@@ -1,7 +1,26 @@
 Formbuilder
 ===========
 
-Dynamic 'twitter bootstrap' form generator parsed on text input, inspired by http://efbe.arc90.com/636775123b36e74524a1837e58a92c8eb08456ef
+Build a form
+
+```
+// Simple input
+Label text ( optionally add "| text or textarea ")
+
+// Special input (i.e checkbox, radio, select)
+Label text | radio
+- Option a
+- Option b
+- Option c
+
+// Text/Description
+= Add descriptions in the middle of your form
+
+// Label with description
+Label text 
+> Tiny description
+```
+
 
 ## Examples
 
