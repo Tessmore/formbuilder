@@ -3,31 +3,36 @@
 $.fn.formbuilder = function() {
 
   var info = $('<div class="alert alert-info"><a target="_blank" href="https://github.com/Tessmore/formbuilder">Tips en voorbeelden!</a></div>');
-  var textarea = $('<textarea name="origin" class="span6" style="min-height:200px" placeholder="Type hier je formulier commandos" />');
+  var textarea = $('<textarea name="origin" class="form-control" style="min-height:200px" placeholder="Type hier je formulier commandos" />');
   var result   = $('<input type="hidden" name="html" />').hide();
   var form     = $('<form />');
-  var group    = $('<div class="control-group" />');
-  var controls = $('<div class="controls" />');
-  var label    = $('<label class="control-label" />');
+  var group    = $('<div class="form-group" />');
+  var label    = $('<label />');
 
   var fields = {
-    'text'     : $('<input type="text" name>'),
+    'text'     : $('<input class="form-control" type="text" name>'),
     'radio'    : $('<div />'),
     'checkbox' : $('<div />'),
-    'textarea' : $('<textarea name />'),
-    'select'   : $('<select name />')
+    'textarea' : $('<textarea class="form-control" name />'),
+    'select'   : $('<select class="form-control" name />')
   };
 
   this
     .append(info)
     .append(textarea)
+    .append('<div class="input-group">')
     .append('<h4>Voorbeeld van dit formulier</h4>')
+    .append('</div>')
     .append(form)
     .after(result); // contains the entire form
 
   // Build the form on ENTER, losing focus or after certain periods of typing
   textarea.on('keyup change', function() {
     form.html(''); // Reset the form
+
+    if (typeof this === "undefined") {
+      return;
+    }
 
     var lines = this.value.split("\n");
 
@@ -44,7 +49,7 @@ $.fn.formbuilder = function() {
       // Allow whitespacing
       if (lines[i].trim() === "---") {
         form = appendText(form, '<br>');
-        continue;        
+        continue;
       }
 
       /**
@@ -83,7 +88,7 @@ $.fn.formbuilder = function() {
           '- Veganistisch',
 
           'shirt*',
-       
+
           'Noodnummer*',
           '> Telefoon nummer in geval van nood',
           'Allergie/medicatie | textarea',
@@ -112,18 +117,16 @@ $.fn.formbuilder = function() {
       /**
         Check what type of field must be inserted
       */
- 
+
       options = parseLine(lines[i]);
-     
+
       group
         .attr('req', options.required)
         .append(label.text(options.label))
-        .append(
-          controls.html(
-            fields[options.type]
+        .append(fields[options.type]
               .attr('name', options.name)
               .attr('id',   options.id)
-         ));
+         );
 
       if (options.type === 'select' || options.type === 'radio' || options.type === 'checkbox') {
         fields[options.type].html(''); // Reset the list
@@ -133,19 +136,23 @@ $.fn.formbuilder = function() {
 
           if (options.type === 'select')
             fields[options.type].append($('<option />').text(value));
-          else
+          else {
+
             fields[options.type].append(
-              '<label class="checkbox">' +
+              '<div class="' + options.type + '">' +
+              '<label>' +
                 '<input type="' + options.type + '" name="' + options.name + '[]" value="' + value + '">' +
                 value +
               '</label>'
             );
+          }
         }
 
         i--; // Go back 1 step to parse the next element
       }
 
       group.clone().appendTo(form);
+      group.empty();
     }
 
     result.val('<div id="custom_form_data">' + form.html() + '</div>');
@@ -182,10 +189,10 @@ $.fn.formbuilder = function() {
 
   function guessType(str) {
     if (contains(str, "rad"))
-      return "radio";   
+      return "radio";
     else if (contains(str, "check"))
       return "checkbox"
-    else if (contains(str, "sele"))  
+    else if (contains(str, "sele"))
       return "select"
     else if (contains(str, "area"))
       return "textarea"
